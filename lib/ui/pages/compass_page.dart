@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pathfinder/bloc/compass_bloc.dart';
+import 'package:pathfinder/util/geo_util.dart';
 
 class CompassPage extends StatefulWidget {
   @override
@@ -38,13 +39,37 @@ class _CompassPageState extends State<CompassPage> {
   Widget _bearingWidget(CompassState state) => Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.arrow_drop_up, size: 84.0),
-          Text(
-            _formatBearing(state.bearing),
-            style: TextStyle(fontSize: 72.0, height: 0.75),
-          )
+//          Icon(Icons.arrow_drop_up, size: 84.0),
+//          Text(
+//            _formatBearing(state.bearing),
+//            style: TextStyle(fontSize: 72.0, height: 0.75),
+//          )
+          Stack(alignment: Alignment.center, children: [_rotatingNeedle(state), _bearingValue(state)])
         ],
       );
+
+  Widget _rotatingNeedle(CompassState state) => Transform.rotate(
+          angle: -GeoUtil.toRadians(state.bearing),
+          child: Container(
+            width: 280.0,
+            height: 280.0,
+            alignment: Alignment.topCenter,
+            child: Icon(Icons.arrow_drop_up, size: 64.0, color: Colors.red,),
+          ));
+
+  Widget _bearingValue(CompassState state) => Container(
+//      color: Colors.deepOrangeAccent,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        border: Border.all(width: 2.0, color: Colors.black),
+      ),
+      width: 200.0,
+      height: 200.0,
+      alignment: Alignment.center,
+      child: Text(
+        _formatBearing(state.bearing),
+        style: TextStyle(fontSize: 40.0, height: 0.75),
+      ));
 
   String _formatBearing(double bearing) {
     String direction = '?';
@@ -65,6 +90,8 @@ class _CompassPageState extends State<CompassPage> {
       direction = 'W';
     else if (bearing > 292.5 && bearing <= 337.5) direction = 'NW';
 
-    return "${bearing.truncate()} $direction";
+    String bearingStr = bearing.truncate().toString().padLeft(3, '0');
+
+    return "$bearingStr\u00B0 $direction";
   }
 }
