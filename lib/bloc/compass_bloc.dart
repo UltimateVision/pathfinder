@@ -25,6 +25,9 @@ class CompassBloc extends Bloc<CompassEvent, CompassState> {
       case BearingChanged:
         yield state.copyWith(bearing: (event as BearingChanged).bearing);
         break;
+      case SetAzimuth:
+        yield state.copyWith(azimuth: (event as SetAzimuth).azimuth);
+        break;
     }
   }
 
@@ -62,6 +65,12 @@ abstract class CompassEvent {}
 class StartCompass extends CompassEvent {}
 
 class StopCompass extends CompassEvent {}
+
+class SetAzimuth extends CompassEvent {
+  final double azimuth;
+
+  SetAzimuth(this.azimuth);
+}
 
 class BearingChanged extends CompassEvent {
   final double bearing;

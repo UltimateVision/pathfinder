@@ -3,7 +3,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sensor_compass/flutter_sensor_compass.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:pathfinder/bloc/compass_bloc.dart';
+import 'package:pathfinder/bloc/geolocation_bloc.dart';
 import 'package:pathfinder/ui/pages/compass_page.dart';
 
 void main() {
@@ -33,7 +35,15 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       //home: MyHomePage(title: 'Flutter Demo Home Page'),
-      home: BlocProvider(create: (context) => CompassBloc(CompassState(0.0, 0.0)), child: CompassPage()),
+      home: MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (context) => CompassBloc(CompassState(0.0, 0.0))),
+          BlocProvider(
+              create: (context) =>
+                  GeolocationBloc(GeolocationState(Position(latitude: 0.0, longitude: 0.0, altitude: 0.0))))
+        ],
+        child: CompassPage(),
+      ),
     );
   }
 }

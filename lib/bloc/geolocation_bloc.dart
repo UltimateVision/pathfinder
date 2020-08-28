@@ -16,7 +16,7 @@ class GeolocationBloc extends Bloc<GeolocationEvent, GeolocationState> {
   Stream<GeolocationState> mapEventToState(GeolocationEvent event) async* {
     switch (event.type) {
       case GeolocationEventType.Start:
-        GeolocationStatus geolocationStatus = await Geolocator().checkGeolocationPermissionStatus();
+        GeolocationStatus geolocationStatus = await _geolocator.checkGeolocationPermissionStatus();
         if (geolocationStatus == GeolocationStatus.granted || geolocationStatus == GeolocationStatus.restricted) {
           _positionStream = _geolocator.getPositionStream(_locationOptions).listen((Position position) {
             add(PositionChangedEvent(position));
@@ -40,7 +40,8 @@ class GeolocationState {
 
   GeolocationState(this.position, {this.status = GeolocationStatus.unknown});
 
-  GeolocationState copyWith({Position position, GeolocationStatus status}) => GeolocationState(position ?? this.position, status: status ?? this.status);
+  GeolocationState copyWith({Position position, GeolocationStatus status}) =>
+      GeolocationState(position ?? this.position, status: status ?? this.status);
 }
 
 enum GeolocationEventType { Start, Stop, PositionChanged }
