@@ -1,10 +1,4 @@
-import 'dart:math';
-
-class GeoUtil {
-  static double toRadians(double degrees) => degrees * ( pi / 180.0);
-
-  static double toDegrees(double radians) => radians * 180 / pi;
-
+class GeoFormattingUtils {
   static String formatBearing(double bearing) {
     String direction = '?';
     bearing = bearing ?? 0.0;
@@ -44,7 +38,7 @@ class GeoUtil {
   static String _formatCoordinate(double coordinate) {
     int degrees = coordinate.truncate();
     int minutes = ((coordinate - degrees) * 60.0).truncate();
-    int seconds = ((((coordinate - degrees) * 60.0) - minutes) * 3600.0).truncate();
+    int seconds = ((((coordinate - degrees) * 60.0) - minutes) * 60.0).truncate();
 
     return "$degrees\u00B0 $minutes' $seconds''";
   }

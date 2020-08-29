@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pathfinder/bloc/compass_bloc.dart';
-import 'package:pathfinder/util/geo_util.dart';
+import 'package:pathfinder/util/geo_formating_utils.dart';
+import 'package:pathfinder/util/geo_utils.dart';
 
 class CompassWidget extends StatefulWidget {
   @override
@@ -29,7 +30,7 @@ class _CompassWidgetState extends State<CompassWidget> {
   }
 
   Widget _rotatingNeedle(double bearing, Color color) => Transform.rotate(
-      angle: -GeoUtil.toRadians(bearing),
+      angle: -GeoUtils.toRadians(bearing),
       child: Container(
         width: 280.0,
         height: 280.0,
@@ -50,7 +51,7 @@ class _CompassWidgetState extends State<CompassWidget> {
       height: 200.0,
       alignment: Alignment.center,
       child: Text(
-        GeoUtil.formatBearing(state.bearing),
+        GeoFormattingUtils.formatBearing(state.bearing),
         style: TextStyle(fontSize: 40.0, height: 0.75),
       ));
 }
