@@ -40,6 +40,6 @@ class GeoFormattingUtils {
     int minutes = ((coordinate - degrees) * 60.0).truncate();
     int seconds = ((((coordinate - degrees) * 60.0) - minutes) * 60.0).truncate();
 
-    return "$degrees\u00B0 $minutes' $seconds''";
+    return "${degrees.toString().padLeft(2, '0')}\u00B0 ${minutes.toString().padLeft(2, '0')}' ${seconds.toString().padLeft(2, '0')}''";
   }
 }

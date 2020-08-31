@@ -36,4 +36,12 @@ class GeoUtils {
 
     return (_equatorialEarthRadius + _polarEarthRadius) / 2 * c;
   }
+
+  static double dmmToDecimal(double degrees, double minutes) {
+    return degrees + minutes / 60.0;
+  }
+
+  static double dmsToDecimal(double degrees, double minutes, double seconds) {
+    return dmmToDecimal(degrees, minutes) + seconds / 3600.0;
+  }
 }
