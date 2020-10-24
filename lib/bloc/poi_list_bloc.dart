@@ -25,7 +25,7 @@ class PoiListBloc extends Bloc<PoiListEvent, PoiListState> {
 
 }
 
-enum PoiListEventType { fetch, add, remove }
+enum PoiListEventType { fetch, add, remove, select }
 
 class PoiListEvent {
   final PoiListEventType type;

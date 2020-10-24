@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:pathfinder/bloc/compass_bloc.dart';
 import 'package:pathfinder/bloc/geolocation_bloc.dart';
-import 'package:pathfinder/bloc/poi_list_bloc.dart';
 import 'package:pathfinder/ui/pages/compass_page.dart';
 
 void main() {
@@ -19,20 +18,20 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitDown,
     ]);
 
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      home: MultiBlocProvider(
-        providers: [
-          BlocProvider(create: (context) => CompassBloc(CompassState(0.0, 0.0))),
-          BlocProvider(
-              create: (context) =>
-                  GeolocationBloc(GeolocationState(Position(latitude: 0.0, longitude: 0.0, altitude: 0.0)))),
-        ],
-        child: CompassPage(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => CompassBloc(CompassState(0.0, 0.0))),
+        BlocProvider(
+            create: (context) =>
+                GeolocationBloc(GeolocationState(Position(latitude: 0.0, longitude: 0.0, altitude: 0.0)))),
+      ],
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+        ),
+        home: CompassPage(),
       ),
     );
   }
