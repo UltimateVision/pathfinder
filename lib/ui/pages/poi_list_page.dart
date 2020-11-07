@@ -36,16 +36,17 @@ class _PoiListState extends State<PoiListPage> {
     return Scaffold(
       body: BlocBuilder<PoiListBloc, PoiListState>(
           builder: (context, state) => ListView.builder(
-              itemCount: state.poiList.length, itemBuilder: (context, index) => _buildRow(state.poiList[index]))),
+              itemCount: state.poiList.length,
+              itemBuilder: (context, index) => _buildRow(state.poiList[index], context))),
     );
   }
 
-  Widget _buildRow(Poi poi) => Padding(
-      padding: EdgeInsets.only(left: 15.0, top: 10.0, bottom: 10.0),
-      child: Row(mainAxisAlignment: MainAxisAlignment.start, crossAxisAlignment: CrossAxisAlignment.center, children: [
-        Padding(padding: EdgeInsets.only(right: 10.0), child: Icon(_icons[poi.type], size: 32.0)),
-        GestureDetector(
-          child: Column(
+  Widget _buildRow(Poi poi, BuildContext context) => GestureDetector(
+    child: Padding(
+        padding: EdgeInsets.only(left: 15.0, top: 10.0, bottom: 10.0),
+        child: Row(mainAxisAlignment: MainAxisAlignment.start, crossAxisAlignment: CrossAxisAlignment.center, children: [
+          Padding(padding: EdgeInsets.only(right: 10.0), child: Icon(_icons[poi.type], size: 32.0)),
+          Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -60,16 +61,20 @@ class _PoiListState extends State<PoiListPage> {
               )
             ],
           ),
-          onTap: () => _selectPoi(poi),
-        ),
-      ]));
+        ])),
+    onTap: () => _selectPoi(poi, context),
+  );
 
-  void _selectPoi(Poi poi) {
+  void _selectPoi(Poi poi, BuildContext context) {
     final Position currentPosition = BlocProvider.of<GeolocationBloc>(context).state.position;
     final double bearing = GeoUtils.calculateBearing(
         currentPosition, Position(latitude: poi.position.latitude, longitude: poi.position.longitude));
     BlocProvider.of<CompassBloc>(context).add(SetAzimuth(bearing));
 
-    // TODO: confirm setting new bearing by showing snackbar or navigate to compass page
+    SnackBar snackBar = SnackBar(
+      content: Text("Bearing set for ${poi.name}"),
+      duration: Duration(seconds: 5),
+    );
+    Scaffold.of(context).showSnackBar(snackBar);
   }
 }
