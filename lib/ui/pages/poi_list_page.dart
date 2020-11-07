@@ -9,6 +9,12 @@ import 'package:pathfinder/model/poi.dart';
 import 'package:pathfinder/util/geo_formating_utils.dart';
 import 'package:pathfinder/util/geo_utils.dart';
 
+/// TODO:
+/// - add new POI
+/// - edit POI
+/// - remove POI
+/// - export POI (json, other industry-standard options)
+/// - import POI (json, other industry-standard options, for eg. *.kml, garmin files)
 class PoiListPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _PoiListState();

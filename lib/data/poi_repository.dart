@@ -2,6 +2,8 @@ import 'package:pathfinder/model/basic_position.dart';
 import 'package:pathfinder/model/poi.dart';
 import 'package:pathfinder/util/geo_utils.dart';
 
+/// TODO:
+/// - use SQLite
 class PoiRepository {
   List<Poi> getPoiList() {
     return [

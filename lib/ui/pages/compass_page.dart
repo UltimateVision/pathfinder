@@ -8,6 +8,9 @@ import 'package:pathfinder/ui/pages/poi_list_page.dart';
 import 'package:pathfinder/ui/widgets/compass_widget.dart';
 import 'package:pathfinder/ui/widgets/location_widget.dart';
 
+/// TODO:
+/// - show distance to selected POI
+/// - user backtracking switch
 class CompassPage extends StatefulWidget {
   @override
   State<CompassPage> createState() => _CompassPageState();

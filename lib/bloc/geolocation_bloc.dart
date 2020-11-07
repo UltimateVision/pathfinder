@@ -17,6 +17,7 @@ class GeolocationBloc extends Bloc<GeolocationEvent, GeolocationState> {
     switch (event.type) {
       case GeolocationEventType.Start:
         GeolocationStatus geolocationStatus = await _geolocator.checkGeolocationPermissionStatus();
+        // FIXME: Handle failure - user should know that setting up listener failed
         if (geolocationStatus == GeolocationStatus.granted || geolocationStatus == GeolocationStatus.restricted) {
           _positionStream = _geolocator.getPositionStream(_locationOptions).listen((Position position) {
             add(PositionChangedEvent(position));
@@ -31,6 +32,12 @@ class GeolocationBloc extends Bloc<GeolocationEvent, GeolocationState> {
       case GeolocationEventType.PositionChanged:
         yield state.copyWith(position: (event as PositionChangedEvent).position);
     }
+  }
+
+  @override
+  Future<Function> close() {
+    _positionStream?.cancel();
+    return super.close();
   }
 }
 
