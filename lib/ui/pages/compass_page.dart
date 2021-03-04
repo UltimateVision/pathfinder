@@ -30,20 +30,21 @@ class _CompassPageState extends State<CompassPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [CompassWidget(), LocationWidget()],
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [CompassWidget(), LocationWidget()],
+              ),
             ),
-          ),
-          _options
-        ],
+            _options
+          ],
+        ),
       ),
-    ));
+    );
   }
 
   Widget get _options => Padding(
